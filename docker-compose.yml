@@ -1,0 +1,27 @@
+version: '3.4'
+
+services:
+  studentapi:
+    build:
+      context: .
+      dockerfile: src/StudentApi/Dockerfile
+    depends_on:
+      - "sqlserver"
+    ports:
+        - "5000:80"
+  studentdataimporterapi:
+    build:
+      context: .
+      dockerfile: src/StudentDataImporterApi/Dockerfile
+    depends_on:
+      - "sqlserver"
+    ports:
+      - "5001:80"
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server
+    ports:
+      - "1433:1433"
+    environment:
+      - SA_PASSWORD=@someThingComplicated1234
+      - ACCEPT_EULA=Y
+
