@@ -3,19 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentDataImporterApi", "src\StudentDataImporterApi\StudentDataImporterApi.csproj", "{421C0308-AE8F-434F-9878-CD2A1C009E00}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentDataImporter.Api", "src\StudentDataImporter.Api\StudentDataImporter.Api.csproj", "{421C0308-AE8F-434F-9878-CD2A1C009E00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentApi", "src\StudentApi\StudentApi.csproj", "{9F1542EE-5883-46C9-87FA-C1B5499747E8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentManagement.Api", "src\StudentManagement.Api\StudentManagement.Api.csproj", "{9F1542EE-5883-46C9-87FA-C1B5499747E8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "docker-compose", "docker-compose.dcproj", "{1FCBE191-34FE-4B2E-8915-CA81553958AD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6FAC4085-21D2-4D4F-A760-D0AAB46FBDCF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "src\Core\Core.csproj", "{325C712D-6015-453C-BE2B-77BDB64ABA7E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentManagement.Core", "src\StudentManagement.Core\StudentManagement.Core.csproj", "{325C712D-6015-453C-BE2B-77BDB64ABA7E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "src\Application\Application.csproj", "{0C46D2D3-6EFC-4148-96FC-7AADB71D0AEC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentManagement.Application", "src\StudentManagement.Application\StudentManagement.Application.csproj", "{0C46D2D3-6EFC-4148-96FC-7AADB71D0AEC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "src\Infrastructure\Infrastructure.csproj", "{D9E6DFB4-FF50-480B-AC11-6E84B712890B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentManagement.Infrastructure", "src\StudentManagement.Infrastructure\StudentManagement.Infrastructure.csproj", "{D9E6DFB4-FF50-480B-AC11-6E84B712890B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

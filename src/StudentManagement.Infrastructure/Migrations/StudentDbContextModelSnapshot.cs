@@ -49,21 +49,24 @@ namespace StudentManagement.Infrastructure.Migrations
 
             modelBuilder.Entity("StudentManagement.Core.Entities.CourseEnrollment", b =>
                 {
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.HasKey("CourseId", "StudentId");
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("StudentId");
+
+                    b.HasIndex("CourseId", "StudentId")
+                        .IsUnique();
 
                     b.ToTable("CourseEnrollments", (string)null);
                 });

@@ -1,18 +1,18 @@
 version: '3.4'
 
 services:
-  studentapi:
+  studentmanagement.api:
     build:
       context: .
-      dockerfile: src/StudentApi/Dockerfile
+      dockerfile: src/StudentManagement.Api/Dockerfile
     depends_on:
       - "sqlserver"
     ports:
         - "5000:80"
-  studentdataimporterapi:
+  studentdataimporter.api:
     build:
       context: .
-      dockerfile: src/StudentDataImporterApi/Dockerfile
+      dockerfile: src/StudentDataImporter.Api/Dockerfile
     depends_on:
       - "sqlserver"
     ports:
