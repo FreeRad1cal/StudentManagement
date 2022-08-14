@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudentManagement.Infrastructure;
 
@@ -11,9 +12,10 @@ using StudentManagement.Infrastructure;
 namespace StudentManagement.Infrastructure.Migrations
 {
     [DbContext(typeof(StudentDbContext))]
-    partial class StudentDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220814230243_CourseEnrollmentIndex")]
+    partial class CourseEnrollmentIndex
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -73,30 +75,21 @@ namespace StudentManagement.Infrastructure.Migrations
 
             modelBuilder.Entity("StudentManagement.Core.Entities.CourseGrade", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("CourseId")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("CourseId")
+                    b.Property<int>("StudentId")
                         .HasColumnType("int");
 
                     b.Property<string>("LetterGrade")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
+                    b.HasKey("CourseId", "StudentId");
 
                     b.HasIndex("LetterGrade");
 
                     b.HasIndex("StudentId");
-
-                    b.HasIndex("CourseId", "StudentId")
-                        .IsUnique();
 
                     b.ToTable("CourseGrades", (string)null);
                 });

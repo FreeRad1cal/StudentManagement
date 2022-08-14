@@ -56,7 +56,9 @@ public class StudentDbContext: DbContext
         builder.Entity<CourseGrade>(entity =>
         {
             entity.ToTable("CourseGrades");
-            entity.HasKey(c => new { c.CourseId, c.StudentId });
+            entity.HasKey(s => s.Id);
+            entity.Property(s => s.Id)
+                .ValueGeneratedOnAdd();
             entity.HasOne(c => c.Course)
                 .WithMany()
                 .OnDelete(DeleteBehavior.Restrict);
@@ -69,6 +71,8 @@ public class StudentDbContext: DbContext
                 .WithMany()
                 .HasForeignKey(c => c.LetterGrade)
                 .OnDelete(DeleteBehavior.Restrict);
+            entity.HasIndex(c => new { c.CourseId, c.StudentId })
+                .IsUnique();
         });
 
         builder.Entity<District>(entity =>
