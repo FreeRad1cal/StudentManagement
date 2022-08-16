@@ -39,6 +39,6 @@ public class StudentContextSeed
             .Select(value => new Grade { LetterValue = value });
     
     private static IEnumerable<SchoolYear> GetPreconfiguredSchoolYears() =>
-        Enumerable.Range(2010, 13)
+        Enumerable.Range(2000, 23)
             .Select(year => new SchoolYear { Year = year.ToString()});
 }

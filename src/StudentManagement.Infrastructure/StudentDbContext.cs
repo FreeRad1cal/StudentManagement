@@ -1,5 +1,6 @@
 ﻿using StudentManagement.Core.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace StudentManagement.Infrastructure;
 
@@ -106,6 +107,8 @@ public class StudentDbContext: DbContext
             entity.HasOne(s => s.District)
                 .WithMany()
                 .OnDelete(DeleteBehavior.Cascade);
+            entity.HasIndex(d => new {d.Name, d.DistrictId})
+                .IsUnique();
         });
 
         builder.Entity<SchoolEnrollment>(entity =>
@@ -139,11 +142,15 @@ public class StudentDbContext: DbContext
                 .IsRequired();
             entity.Property(s => s.LastName)
                 .IsRequired();
+            entity.Property(s => s.MiddleName)
+                .IsRequired(false);
             entity.Property(s => s.DateOfBirth)
                 .IsRequired();
             entity.Property(s => s.Gender)
+                .HasConversion(new EnumToStringConverter<Gender>())
+                .HasMaxLength(1)
                 .IsRequired();
-            entity.HasIndex(s => new { s.LastName, s.FirstName, s.DateOfBirth, s.MiddleName })
+            entity.HasIndex(s => new { s.LastName, s.FirstName, s.DateOfBirth })
                 .IsUnique();
         });
     }

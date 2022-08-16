@@ -10,5 +10,5 @@ public class DataImporterResponse
     
     public int CoursesImported { get; set; }
     
-    public int GradesImported { get; set; }
+    public int CourseGradesImported { get; set; }
 }

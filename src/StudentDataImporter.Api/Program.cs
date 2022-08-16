@@ -17,6 +17,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<IDataImporter, DataImporter>();
 builder.Services.AddSingleton(builder.Configuration.GetRequiredSection("ConfigurationConstants").Get<ConfigurationConstants>());
 builder.Services.AddScoped<IRepository<District>, DistrictRepository>();
+builder.Services.AddScoped<IRepository<School>, SchoolRepository>();
+builder.Services.AddScoped<IRepository<Course>, CourseRepository>();
+builder.Services.AddScoped<IRepository<CourseEnrollment>, CourseEnrollmentRepository>();
+builder.Services.AddScoped<IRepository<SchoolEnrollment>, SchoolEnrollmentRepository>();
+builder.Services.AddScoped<IRepository<CourseGrade>, CourseGradeRepository>();
+builder.Services.AddScoped<IRepository<Student>, StudentRepository>();
 builder.Services.AddTransient<IRowParser, RowParser>();
 
 var app = builder.Build();

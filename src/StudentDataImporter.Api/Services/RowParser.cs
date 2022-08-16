@@ -25,7 +25,7 @@ public class RowParser: IRowParser
             Course = new Course
             {
                 Name = columns[1],
-                Year = $"20{columns[4]}"
+                Year = ParseYear(columns[4])
             },
             Grade = new Grade
             {
@@ -37,7 +37,7 @@ public class RowParser: IRowParser
             },
             SchoolYear = new SchoolYear
             {
-                Year = $"20{columns[4]}"
+                Year = ParseYear(columns[4])
             },
             Student = new Student
             {
@@ -67,4 +67,7 @@ public class RowParser: IRowParser
             string.IsNullOrWhiteSpace(groups[3].Value.Trim()) ? null : groups[3].Value.Trim()
         );
     }
+
+    private string ParseYear(string year) => 
+        year.Length == 1 ? $"200{year}" : $"20{year}";
 }
