@@ -2,7 +2,13 @@
 
 public class DataImporterResponse
 {
-    public int RecordsImported { get; set; }
+    public int DistrictsImported { get; set; }
     
-    public int DuplicatesSkipped { get; set; }
+    public int SchoolsImported { get; set; }
+    
+    public int StudentsImported { get; set; }
+    
+    public int CoursesImported { get; set; }
+    
+    public int GradesImported { get; set; }
 }

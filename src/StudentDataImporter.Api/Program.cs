@@ -1,4 +1,8 @@
 using StudentDataImporter.Api;
+using StudentDataImporter.Api.Configuration;
+using StudentDataImporter.Api.DataAccess.Entities;
+using StudentDataImporter.Api.DataAccess.Repositories;
+using StudentDataImporter.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +14,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 //Register app services
-builder.Services.RegisterImporterServices(builder.Configuration);
+builder.Services.AddTransient<IDataImporter, DataImporter>();
+builder.Services.AddSingleton(builder.Configuration.GetRequiredSection("ConfigurationConstants").Get<ConfigurationConstants>());
+builder.Services.AddScoped<IRepository<District>, DistrictRepository>();
+builder.Services.AddTransient<IRowParser, RowParser>();
 
 var app = builder.Build();
 

@@ -9,15 +9,15 @@ namespace StudentDataImporter.Api.Controllers;
 public class DataImportController : ControllerBase
 {
     private readonly ILogger<DataImportController> _logger;
-    private readonly IDataImporterService _dataImporterService;
+    private readonly IDataImporter _dataImporter;
 
-    public DataImportController(ILogger<DataImportController> logger, IDataImporterService dataImporterService)
+    public DataImportController(ILogger<DataImportController> logger, IDataImporter dataImporter)
     {
         _logger = logger;
-        _dataImporterService = dataImporterService;
+        _dataImporter = dataImporter;
     }
 
-    [HttpPost(Name = "student-data")]
+    [HttpPost("student-data")]
     public async Task<IActionResult> ImportStudentDataAsync([FromForm] ImportDataRequest request)
     {
         if (request.StudentData.Length == 0)
@@ -25,14 +25,9 @@ public class DataImportController : ControllerBase
             return BadRequest("A nonempty file is required");
         }
 
-        string data;
-        using (var stream = new StreamReader(request.StudentData.OpenReadStream()))
-        {
-            data = await stream.ReadToEndAsync();
-        }
+        using var stream = request.StudentData.OpenReadStream();
+        var response = await _dataImporter.ImportData(stream);
         
-        var result = await _dataImporterService.ImportData(data);
-        
-        return Ok(result);
+        return Ok(response);
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace StudentManagement.Core.Entities;
+﻿namespace StudentDataImporter.Api.DataAccess.Entities;
 
 public class Student
 {
@@ -13,8 +13,4 @@ public class Student
     public DateTime DateOfBirth { get; set; }
     
     public Gender Gender { get; set; }
-    
-    public IEnumerable<CourseEnrollment> CourseEnrollments { get; set; }
-    
-    public SchoolEnrollment SchoolEnrollment { get; set; }
 }

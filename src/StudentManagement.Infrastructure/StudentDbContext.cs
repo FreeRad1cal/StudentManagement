@@ -27,13 +27,15 @@ public class StudentDbContext: DbContext
             entity.HasKey(c => c.Id);
             entity.Property(c => c.Id)
                 .ValueGeneratedOnAdd();
+            entity.Property(c => c.Name)
+                .IsRequired();
             entity.Property(c => c.Year)
                 .IsRequired();
             entity.HasOne(c => c.SchoolYear)
                 .WithMany()
                 .HasForeignKey(c => c.Year)
                 .OnDelete(DeleteBehavior.Restrict);
-            entity.HasIndex(c => new { c.SchoolId, c.Year })
+            entity.HasIndex(c => new { c.SchoolId, c.Name, c.Year })
                 .IsUnique();
         });
 
@@ -141,7 +143,7 @@ public class StudentDbContext: DbContext
                 .IsRequired();
             entity.Property(s => s.Gender)
                 .IsRequired();
-            entity.HasIndex(s => new { s.LastName, s.FirstName, s.DateOfBirth })
+            entity.HasIndex(s => new { s.LastName, s.FirstName, s.DateOfBirth, s.MiddleName })
                 .IsUnique();
         });
     }

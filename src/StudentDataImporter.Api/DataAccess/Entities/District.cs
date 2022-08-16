@@ -1,4 +1,4 @@
-﻿namespace StudentManagement.Core.Entities;
+﻿namespace StudentDataImporter.Api.DataAccess.Entities;
 
 public class District
 {
