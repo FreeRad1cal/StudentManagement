@@ -11,6 +11,7 @@ public static class ClassFactory
         return services.AddDbContext<StudentDbContext>(c =>
             c.UseSqlServer(configuration.GetConnectionString("StudentManagementDb"), options =>
             {
+                options.MigrationsAssembly(typeof(ClassFactory).Assembly.FullName);
                 options.EnableRetryOnFailure(maxRetryCount: 15, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: Array.Empty<int>());
             }))
             .AddTransient<StudentContextSeed>();

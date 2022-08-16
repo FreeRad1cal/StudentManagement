@@ -15,6 +15,12 @@ public class StudentContextSeed
         _logger = logger;
     }
 
+    public async Task MigrateDatabase()
+    {
+        _logger.LogInformation("Migrating database...");
+        await _context.Database.MigrateAsync();
+    }
+    
     public async Task SeedAsync()
     {
         _logger.LogInformation("Seeding letter grades...");

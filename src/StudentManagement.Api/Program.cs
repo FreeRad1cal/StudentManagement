@@ -15,18 +15,7 @@ builder.Services.RegisterInfrastructureServices(builder.Configuration);
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    try
-    {
-        var seed = scope.ServiceProvider.GetRequiredService<StudentContextSeed>();
-        await seed.SeedAsync();
-    }
-    catch (Exception e)
-    {
-        app.Logger.LogError(e, "Could not seed the DB");
-    }
-}
+await MigrateAndSeedDatabase(app.Services, app.Logger);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -42,3 +31,18 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+static async Task MigrateAndSeedDatabase(IServiceProvider services, ILogger logger)
+{
+    using var scope = services.CreateScope();
+    try
+    {
+        var seed = scope.ServiceProvider.GetRequiredService<StudentContextSeed>();
+        await seed.MigrateDatabase();
+        await seed.SeedAsync();
+    }
+    catch (Exception e)
+    {
+        logger.LogError(e, "Could not seed the DB");
+    }
+}
