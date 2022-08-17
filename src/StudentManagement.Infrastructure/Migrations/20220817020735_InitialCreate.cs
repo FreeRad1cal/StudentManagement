@@ -15,7 +15,7 @@ namespace StudentManagement.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<int>(type: "int", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -51,9 +51,10 @@ namespace StudentManagement.Infrastructure.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    MiddleName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Gender = table.Column<int>(type: "int", nullable: false)
+                    Gender = table.Column<string>(type: "nvarchar(1)", maxLength: 1, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -66,7 +67,7 @@ namespace StudentManagement.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     DistrictId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -86,6 +87,7 @@ namespace StudentManagement.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Year = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     SchoolId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -110,14 +112,14 @@ namespace StudentManagement.Infrastructure.Migrations
                 name: "SchoolEnrollments",
                 columns: table => new
                 {
-                    StudentId = table.Column<int>(type: "int", nullable: false),
-                    SchoolId = table.Column<int>(type: "int", nullable: false),
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1")
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StudentId = table.Column<int>(type: "int", nullable: false),
+                    SchoolId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SchoolEnrollments", x => new { x.StudentId, x.SchoolId });
+                    table.PrimaryKey("PK_SchoolEnrollments", x => x.Id);
                     table.ForeignKey(
                         name: "FK_SchoolEnrollments_Schools_SchoolId",
                         column: x => x.SchoolId,
@@ -136,14 +138,14 @@ namespace StudentManagement.Infrastructure.Migrations
                 name: "CourseEnrollments",
                 columns: table => new
                 {
-                    StudentId = table.Column<int>(type: "int", nullable: false),
-                    CourseId = table.Column<int>(type: "int", nullable: false),
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1")
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StudentId = table.Column<int>(type: "int", nullable: false),
+                    CourseId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CourseEnrollments", x => new { x.CourseId, x.StudentId });
+                    table.PrimaryKey("PK_CourseEnrollments", x => x.Id);
                     table.ForeignKey(
                         name: "FK_CourseEnrollments_Courses_CourseId",
                         column: x => x.CourseId,
@@ -162,13 +164,15 @@ namespace StudentManagement.Infrastructure.Migrations
                 name: "CourseGrades",
                 columns: table => new
                 {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     CourseId = table.Column<int>(type: "int", nullable: false),
                     StudentId = table.Column<int>(type: "int", nullable: false),
                     LetterGrade = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CourseGrades", x => new { x.CourseId, x.StudentId });
+                    table.PrimaryKey("PK_CourseGrades", x => x.Id);
                     table.ForeignKey(
                         name: "FK_CourseGrades_Courses_CourseId",
                         column: x => x.CourseId,
@@ -190,9 +194,21 @@ namespace StudentManagement.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_CourseEnrollments_CourseId_StudentId",
+                table: "CourseEnrollments",
+                columns: new[] { "CourseId", "StudentId" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CourseEnrollments_StudentId",
                 table: "CourseEnrollments",
                 column: "StudentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CourseGrades_CourseId_StudentId",
+                table: "CourseGrades",
+                columns: new[] { "CourseId", "StudentId" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_CourseGrades_LetterGrade",
@@ -205,9 +221,9 @@ namespace StudentManagement.Infrastructure.Migrations
                 column: "StudentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Courses_SchoolId_Year",
+                name: "IX_Courses_SchoolId_Name_Year",
                 table: "Courses",
-                columns: new[] { "SchoolId", "Year" },
+                columns: new[] { "SchoolId", "Name", "Year" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -233,9 +249,21 @@ namespace StudentManagement.Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_SchoolEnrollments_StudentId_SchoolId",
+                table: "SchoolEnrollments",
+                columns: new[] { "StudentId", "SchoolId" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Schools_DistrictId",
                 table: "Schools",
                 column: "DistrictId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Schools_Name_DistrictId",
+                table: "Schools",
+                columns: new[] { "Name", "DistrictId" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Students_LastName_FirstName_DateOfBirth",

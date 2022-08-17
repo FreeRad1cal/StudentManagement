@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using StudentManagement.Infrastructure;
 using StudentManagement.Infrastructure.Data;
 
 #nullable disable
@@ -13,8 +12,8 @@ using StudentManagement.Infrastructure.Data;
 namespace StudentManagement.Infrastructure.Migrations
 {
     [DbContext(typeof(StudentDbContext))]
-    [Migration("20220816021704_DistrictName")]
-    partial class DistrictName
+    [Migration("20220817020735_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -151,34 +150,40 @@ namespace StudentManagement.Infrastructure.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("DistrictId");
+
+                    b.HasIndex("Name", "DistrictId")
+                        .IsUnique();
 
                     b.ToTable("Schools", (string)null);
                 });
 
             modelBuilder.Entity("StudentManagement.Core.Entities.SchoolEnrollment", b =>
                 {
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SchoolId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.HasKey("StudentId", "SchoolId");
+                    b.Property<int>("SchoolId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("SchoolId");
 
                     b.HasIndex("StudentId")
+                        .IsUnique();
+
+                    b.HasIndex("StudentId", "SchoolId")
                         .IsUnique();
 
                     b.ToTable("SchoolEnrollments", (string)null);
@@ -209,12 +214,17 @@ namespace StudentManagement.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("Gender")
-                        .HasColumnType("int");
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasMaxLength(1)
+                        .HasColumnType("nvarchar(1)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("MiddleName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
