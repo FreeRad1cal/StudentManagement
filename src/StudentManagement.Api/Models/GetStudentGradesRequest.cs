@@ -1,6 +1,6 @@
 ﻿namespace StudentManagement.Api.Models;
 
-public class GetStudentGradesRequestDto
+public class GetStudentGradesRequest
 {
     public int? SchoolId { get; set; }
 }

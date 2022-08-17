@@ -18,7 +18,7 @@ public class StudentsController : ControllerBase
     }
 
     [HttpGet("students")]
-    public async Task<IActionResult> GetStudentsAsync([FromQuery] GetStudentsRequestDto request)
+    public async Task<IActionResult> GetStudentsAsync([FromQuery] GetStudentsRequest request)
     {
         var result = await _studentService.FindAsync(request.FirstName, request.LastName, request.DateOfBirth,
             request.SchoolId);

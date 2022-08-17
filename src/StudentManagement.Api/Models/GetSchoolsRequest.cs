@@ -1,6 +1,6 @@
 ﻿namespace StudentManagement.Api.Models;
 
-public class GetSchoolsRequestDto
+public class GetSchoolsRequest
 {
     public string? Name { get; set; }
 }
