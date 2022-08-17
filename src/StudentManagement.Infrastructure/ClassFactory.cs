@@ -2,9 +2,10 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StudentManagement.Core.Interfaces;
+using StudentManagement.Infrastructure.Data;
 using StudentManagement.Infrastructure.Data.Repositories;
 
-namespace StudentManagement.Infrastructure.Data;
+namespace StudentManagement.Infrastructure;
 
 public static class ClassFactory
 {
