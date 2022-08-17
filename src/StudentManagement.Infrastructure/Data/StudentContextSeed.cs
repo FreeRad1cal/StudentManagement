@@ -1,8 +1,8 @@
-﻿using StudentManagement.Core.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using StudentManagement.Core.Entities;
 
-namespace StudentManagement.Infrastructure;
+namespace StudentManagement.Infrastructure.Data;
 
 public class StudentContextSeed
 {

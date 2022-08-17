@@ -6,14 +6,15 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudentManagement.Infrastructure;
+using StudentManagement.Infrastructure.Data;
 
 #nullable disable
 
 namespace StudentManagement.Infrastructure.Migrations
 {
     [DbContext(typeof(StudentDbContext))]
-    [Migration("20220814230243_CourseEnrollmentIndex")]
-    partial class CourseEnrollmentIndex
+    [Migration("20220814231032_CourseGradeKey")]
+    partial class CourseGradeKey
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -75,21 +76,30 @@ namespace StudentManagement.Infrastructure.Migrations
 
             modelBuilder.Entity("StudentManagement.Core.Entities.CourseGrade", b =>
                 {
-                    b.Property<int>("CourseId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("StudentId")
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CourseId")
                         .HasColumnType("int");
 
                     b.Property<string>("LetterGrade")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("CourseId", "StudentId");
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("LetterGrade");
 
                     b.HasIndex("StudentId");
+
+                    b.HasIndex("CourseId", "StudentId")
+                        .IsUnique();
 
                     b.ToTable("CourseGrades", (string)null);
                 });

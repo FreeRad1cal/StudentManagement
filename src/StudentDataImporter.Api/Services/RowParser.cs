@@ -41,7 +41,7 @@ public class RowParser: IRowParser
             },
             Student = new Student
             {
-                DateOfBirth = DateTime.Parse(columns[2]),
+                DateOfBirth = ParseDateOfBirth(columns[2]),
                 FirstName = firstName ?? throw new ArgumentException("Invalid name format"),
                 MiddleName = middleName,
                 LastName = lastName ?? throw new ArgumentException("Invalid name format"),
@@ -70,4 +70,7 @@ public class RowParser: IRowParser
 
     private string ParseYear(string year) => 
         year.Length == 1 ? $"200{year}" : $"20{year}";
+
+    private DateTime ParseDateOfBirth(string dob) => 
+        DateTime.Parse(DateTime.Parse(dob).ToString("MM/dd/yyyy"));
 }

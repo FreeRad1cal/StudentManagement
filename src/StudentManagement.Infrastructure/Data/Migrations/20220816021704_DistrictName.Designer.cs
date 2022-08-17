@@ -6,14 +6,15 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudentManagement.Infrastructure;
+using StudentManagement.Infrastructure.Data;
 
 #nullable disable
 
 namespace StudentManagement.Infrastructure.Migrations
 {
     [DbContext(typeof(StudentDbContext))]
-    [Migration("20220814231032_CourseGradeKey")]
-    partial class CourseGradeKey
+    [Migration("20220816021704_DistrictName")]
+    partial class DistrictName
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,6 +33,10 @@ namespace StudentManagement.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("SchoolId")
                         .HasColumnType("int");
 
@@ -43,7 +48,7 @@ namespace StudentManagement.Infrastructure.Migrations
 
                     b.HasIndex("Year");
 
-                    b.HasIndex("SchoolId", "Year")
+                    b.HasIndex("SchoolId", "Name", "Year")
                         .IsUnique();
 
                     b.ToTable("Courses", (string)null);
@@ -111,8 +116,9 @@ namespace StudentManagement.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("Name")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 

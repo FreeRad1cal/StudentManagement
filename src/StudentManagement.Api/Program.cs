@@ -1,5 +1,6 @@
 using StudentManagement.Application;
 using StudentManagement.Infrastructure;
+using StudentManagement.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

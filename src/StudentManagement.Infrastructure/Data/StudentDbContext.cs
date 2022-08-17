@@ -1,8 +1,8 @@
-﻿using StudentManagement.Core.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using StudentManagement.Core.Entities;
 
-namespace StudentManagement.Infrastructure;
+namespace StudentManagement.Infrastructure.Data;
 
 public class StudentDbContext: DbContext
 {
@@ -28,10 +28,6 @@ public class StudentDbContext: DbContext
             entity.HasKey(c => c.Id);
             entity.Property(c => c.Id)
                 .ValueGeneratedOnAdd();
-            entity.Property(c => c.Name)
-                .IsRequired();
-            entity.Property(c => c.Year)
-                .IsRequired();
             entity.HasOne(c => c.SchoolYear)
                 .WithMany()
                 .HasForeignKey(c => c.Year)
@@ -68,8 +64,6 @@ public class StudentDbContext: DbContext
             entity.HasOne(c => c.Student)
                 .WithMany()
                 .OnDelete(DeleteBehavior.Restrict);
-            entity.Property(c => c.LetterGrade)
-                .IsRequired();
             entity.HasOne(c => c.Grade)
                 .WithMany()
                 .HasForeignKey(c => c.LetterGrade)
@@ -84,8 +78,6 @@ public class StudentDbContext: DbContext
             entity.HasKey(d => d.Id);
             entity.Property(d => d.Id)
                 .ValueGeneratedOnAdd();
-            entity.Property(d => d.Name)
-                .IsRequired();
             entity.HasIndex(d => d.Name)
                 .IsUnique();
         });
@@ -102,8 +94,6 @@ public class StudentDbContext: DbContext
             entity.HasKey(s => s.Id);
             entity.Property(s => s.Id)
                 .ValueGeneratedOnAdd();
-            entity.Property(s => s.Name)
-                .IsRequired();
             entity.HasOne(s => s.District)
                 .WithMany()
                 .OnDelete(DeleteBehavior.Cascade);
@@ -117,13 +107,14 @@ public class StudentDbContext: DbContext
             entity.HasKey(s => s.Id);
             entity.Property(s => s.Id)
                 .ValueGeneratedOnAdd();
-            entity.HasKey(s => new { s.StudentId, s.SchoolId });
             entity.HasOne(c => c.School)
                 .WithMany()
                 .OnDelete(DeleteBehavior.Cascade);
             entity.HasOne(c => c.Student)
                 .WithOne(s => s.SchoolEnrollment)
                 .OnDelete(DeleteBehavior.Cascade);
+            entity.HasIndex(s => new { s.StudentId, s.SchoolId })
+                .IsUnique();
         });
 
         builder.Entity<SchoolYear>(entity =>
@@ -138,14 +129,8 @@ public class StudentDbContext: DbContext
             entity.HasKey(s => s.Id);
             entity.Property(s => s.Id)
                 .ValueGeneratedOnAdd();
-            entity.Property(s => s.FirstName)
-                .IsRequired();
-            entity.Property(s => s.LastName)
-                .IsRequired();
             entity.Property(s => s.MiddleName)
                 .IsRequired(false);
-            entity.Property(s => s.DateOfBirth)
-                .IsRequired();
             entity.Property(s => s.Gender)
                 .HasConversion(new EnumToStringConverter<Gender>())
                 .HasMaxLength(1)

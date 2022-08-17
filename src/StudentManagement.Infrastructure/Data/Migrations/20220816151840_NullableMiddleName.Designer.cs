@@ -6,14 +6,15 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudentManagement.Infrastructure;
+using StudentManagement.Infrastructure.Data;
 
 #nullable disable
 
 namespace StudentManagement.Infrastructure.Migrations
 {
     [DbContext(typeof(StudentDbContext))]
-    [Migration("20220816053738_SchoolIndex")]
-    partial class SchoolIndex
+    [Migration("20220816151840_NullableMiddleName")]
+    partial class NullableMiddleName
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -219,12 +220,11 @@ namespace StudentManagement.Infrastructure.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("MiddleName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("LastName", "FirstName", "DateOfBirth", "MiddleName")
+                    b.HasIndex("LastName", "FirstName", "DateOfBirth")
                         .IsUnique();
 
                     b.ToTable("Students", (string)null);
