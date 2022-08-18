@@ -1,3 +1,4 @@
+using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using StudentDataImporter.Api.Models;
 using StudentDataImporter.Api.Services;
@@ -18,6 +19,7 @@ public class DataImportController : ControllerBase
     }
 
     [HttpPost("student-data")]
+    [ProducesResponseType(typeof(DataImporterResponse), (int)HttpStatusCode.OK)]
     public async Task<IActionResult> ImportStudentDataAsync([FromForm] ImportDataRequest request)
     {
         if (request.StudentData.Length == 0)

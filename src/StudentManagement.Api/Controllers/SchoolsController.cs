@@ -1,6 +1,8 @@
+using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using StudentManagement.Api.Models;
 using StudentManagement.Core.Interfaces;
+using StudentManagement.Core.Models;
 
 namespace StudentManagement.Api.Controllers;
 
@@ -18,6 +20,7 @@ public class SchoolsController : ControllerBase
     }
 
     [HttpGet("schools")]
+    [ProducesResponseType(typeof(IEnumerable<SchoolDto>), (int) HttpStatusCode.OK)]
     public async Task<IActionResult> GetSchoolsAsync([FromQuery] GetSchoolsRequest request)
     {
         var result = await _schoolService.FindAsync(request.Name);
