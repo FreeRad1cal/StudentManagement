@@ -1,6 +1,6 @@
 ﻿namespace StudentManagement.Core.Entities;
 
-public class School
+public class School: IEntity
 {
     public int Id { get; set; }
     

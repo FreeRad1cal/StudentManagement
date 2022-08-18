@@ -22,10 +22,11 @@ public class DataImportController : ControllerBase
     {
         if (request.StudentData.Length == 0)
         {
+            _logger.LogError("Empty file submitted");
             return BadRequest("A nonempty file is required");
         }
 
-        using var stream = request.StudentData.OpenReadStream();
+        await using var stream = request.StudentData.OpenReadStream();
         var response = await _dataImporter.ImportData(stream);
         
         return Ok(response);

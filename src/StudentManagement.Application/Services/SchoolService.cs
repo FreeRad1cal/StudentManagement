@@ -16,16 +16,14 @@ public class SchoolService: ISchoolService
     
     public async Task<IEnumerable<SchoolDto>> FindAsync(string? name)
     {
-        var query = _schoolRepository.Get()
-            .Include(s => s.District)
-            .AsQueryable();
+        var query = _schoolRepository.Get();
 
         if (name != null)
         {
             query = query.Where(s => s.Name == name);
         }
 
-        var schools = await query.AsNoTracking().ToListAsync();
+        var schools = await query.ToListAsync();
 
         return schools.Select(s => new SchoolDto
         {

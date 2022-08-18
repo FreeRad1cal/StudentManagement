@@ -1,6 +1,6 @@
 ﻿namespace StudentManagement.Core.Entities;
 
-public class CourseGrade
+public class CourseGrade: IEntity
 {
     public int Id { get; set; }
     

@@ -18,10 +18,7 @@ public class StudentService: IStudentService
     
     public async Task<IEnumerable<StudentDto>> FindAsync(string firstName, string lastName, DateTime? dateOfBirth, int? schoolId)
     {
-        var query = _studentRepository.Get()
-            .Include(s => s.SchoolEnrollment)
-            .ThenInclude(e => e.School)
-            .AsQueryable();
+        var query = _studentRepository.Get(new[] {"SchoolEnrollment.School"});
 
         if (firstName != null)
         {
@@ -43,7 +40,7 @@ public class StudentService: IStudentService
             query = query.Where(s => s.SchoolEnrollment.School.Id == schoolId);
         }
 
-        var students = await query.AsNoTracking().ToListAsync();
+        var students = await query.ToListAsync();
 
         return students.Select(s => new StudentDto
         {
@@ -65,7 +62,6 @@ public class StudentService: IStudentService
     {
         var student = await _studentRepository.Get()
             .Where(s => s.Id == studentId)
-            .AsNoTracking()
             .FirstOrDefaultAsync();
 
         return student == null
@@ -88,11 +84,8 @@ public class StudentService: IStudentService
 
     public async Task<IEnumerable<GradeDto>> FindGradesAsync(int studentId)
     {
-        var grades = await _gradeRepository.Get()
+        var grades = await _gradeRepository.Get(new[] {"Course.School"})
             .Where(g => g.StudentId == studentId)
-            .Include(g => g.Course)
-            .ThenInclude(c => c.School)
-            .AsNoTracking()
             .ToListAsync();
 
         return grades.Select(g => new GradeDto

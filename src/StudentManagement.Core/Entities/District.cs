@@ -1,6 +1,6 @@
 ﻿namespace StudentManagement.Core.Entities;
 
-public class District
+public class District: IEntity
 {
     public int Id { get; set; }
     
