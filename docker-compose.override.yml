@@ -2,14 +2,16 @@ version: '3.4'
 services:
   studentmanagement.api:
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:80
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ASPNETCORE_URLS: "http://+:80"
+      ConnectionStrings__StudentManagementDb: "Server=sqlserver;Database=StudentManagementDb;User Id=sa;Password=@someThingComplicated1234;"
     ports:
       - "5000:80"
   studentdataimporter.api:
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:80
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ASPNETCORE_URLS: "http://+:80"
+      ConnectionStrings__StudentManagementDb: "Server=sqlserver;Database=StudentManagementDb;User Id=sa;Password=@someThingComplicated1234;"
     ports:
       - "5001:80"
 
