@@ -28,6 +28,9 @@ public class StudentDbContext: DbContext
             entity.HasKey(c => c.Id);
             entity.Property(c => c.Id)
                 .ValueGeneratedOnAdd();
+            entity.Property(c => c.Name)
+                .HasMaxLength(450)
+                .IsRequired();
             entity.HasOne(c => c.SchoolYear)
                 .WithMany()
                 .HasForeignKey(c => c.Year)
@@ -78,6 +81,9 @@ public class StudentDbContext: DbContext
             entity.HasKey(d => d.Id);
             entity.Property(d => d.Id)
                 .ValueGeneratedOnAdd();
+            entity.Property(d => d.Name)
+                .HasMaxLength(450)
+                .IsRequired();
             entity.HasIndex(d => d.Name)
                 .IsUnique();
         });
@@ -94,6 +100,9 @@ public class StudentDbContext: DbContext
             entity.HasKey(s => s.Id);
             entity.Property(s => s.Id)
                 .ValueGeneratedOnAdd();
+            entity.Property(s => s.Name)
+                .HasMaxLength(450)
+                .IsRequired();
             entity.HasOne(s => s.District)
                 .WithMany()
                 .OnDelete(DeleteBehavior.Cascade);
@@ -131,6 +140,12 @@ public class StudentDbContext: DbContext
                 .ValueGeneratedOnAdd();
             entity.Property(s => s.MiddleName)
                 .IsRequired(false);
+            entity.Property(s => s.FirstName)
+                .HasMaxLength(450)
+                .IsRequired();
+            entity.Property(s => s.LastName)
+                .HasMaxLength(450)
+                .IsRequired();
             entity.Property(s => s.Gender)
                 .HasConversion(new EnumToStringConverter<Gender>())
                 .HasMaxLength(1)
